@@ -23,7 +23,8 @@ module.exports = {
     alias: {
       components: path.resolve('src/components'),
       containers: path.resolve('src/containers'),
-      actions: path.resolve('src/actions')
+      actions: path.resolve('src/actions'),
+      utils: path.resolve('src/utils')
     },
     extensions: ['.js']
   },
