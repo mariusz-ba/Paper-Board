@@ -1,5 +1,6 @@
 import * as TYPES from 'actions/constants/cardsConstants';
 import { omit } from 'lodash';
+import { dump } from 'utils/storage';
 
 const initial_state = {
   items: {}
@@ -7,19 +8,26 @@ const initial_state = {
 
 export default function reducer(state = initial_state, action) {
   switch(action.type) {
+    case TYPES.LOAD_CARDS: {
+      state = { ...state, ...action.payload };
+      break;
+    }
     case TYPES.CREATE_CARD: {
       // action.payload = card
       state = { ...state, items: { ...state.items, [action.payload.id]: action.payload }};
+      dump('cards', state);
       break;
     }
     case TYPES.UPDATE_CARD: {
       // action.payload = card
       state = { ...state, items: { ...state.items, [action.payload.id]: action.payload }};
+      dump('cards', state);
       break;
     }
     case TYPES.DELETE_CARD: {
       // action.payload = card id
       state = { ...state, items: omit(state.items, action.payload) };
+      dump('cards', state);
       break;
     }
     case TYPES.ADD_TODO: {
@@ -39,6 +47,7 @@ export default function reducer(state = initial_state, action) {
           }
         }
       }
+      dump('cards', state);
       break;
     }
     case TYPES.REMOVE_TODO: {
@@ -59,8 +68,11 @@ export default function reducer(state = initial_state, action) {
           }
         }
       }
+      dump('cards', state);
       break;
     }
+    default: {}
   }
+
   return state;
 }

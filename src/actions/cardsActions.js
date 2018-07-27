@@ -1,5 +1,10 @@
 import * as TYPES from './constants/cardsConstants';
 
+export const loadCards = (state) => ({
+  type: TYPES.LOAD_CARDS,
+  payload: state
+})
+
 export const createCard = (card) => ({
   type: TYPES.CREATE_CARD,
   payload: card
