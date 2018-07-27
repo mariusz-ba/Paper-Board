@@ -22,7 +22,8 @@ module.exports = {
   resolve: {
     alias: {
       components: path.resolve('src/components'),
-      containers: path.resolve('src/containers')
+      containers: path.resolve('src/containers'),
+      actions: path.resolve('src/actions')
     },
     extensions: ['.js']
   },
