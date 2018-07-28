@@ -2,16 +2,22 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-const Card = styled.div`
-
+const Card = styled.li`
+  border: 2px solid black;
+  border-radius: 3px;
 `
 
 Card.Header = styled.div`
-
+  padding: .5rem;
+  border-bottom: 1px solid black;
+  display: flex;
+  justify-content: space-between;
 `
 
 Card.Editor = styled.input`
-
+  width: 100%;
+  font-size: 1em;
+  padding: .5rem;
 `
 
 Card.Title = styled.h3`
@@ -19,10 +25,15 @@ Card.Title = styled.h3`
 `
 
 Card.Actions = styled.div`
-
+  display: flex;
+  align-self: flex-start;
 `
 
 Card.Body = styled.div`
+
+`
+
+Card.TodoEditor = styled.input`
 
 `
 
@@ -30,6 +41,8 @@ export default class extends Component {
   state = {
     edit: false,
     editor: this.props.name,
+    todo: '',
+    todoEditorVisible: false
   }
 
   static propTypes = {
@@ -43,21 +56,25 @@ export default class extends Component {
     onCreateTodo: PropTypes.func.isRequired,
   }
 
-  componentDidMount() {
-    document.addEventListener('keydown', this.handleKey);
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('keydown', this.handleKey);
-  }
-
-  handleKey = e => {
+  handleEditorKey = e => {
     if(e.key === 'Enter')
       this.submit();
   }
 
+  handleTodoEditorKey = e => {
+    if(e.key === 'Enter') {
+      this.props.onCreateTodo(this.state.todo);
+      this.setState({
+        todo: '',
+        todoEditorVisible: false
+      })
+    }
+  }
+
   edit = () => { this.setState({ edit: true }) }
+
   changeEditor = e => { this.setState({ editor: e.target.value })};
+  changeTodo = e => { this.setState({ todo: e.target.value })};
 
   // Submit edited card
   submit = () => {
@@ -65,19 +82,23 @@ export default class extends Component {
     this.props.onUpdate(this.state.editor);
   }
 
+  showTodoEditor = () => {
+    this.setState({ todoEditorVisible: true });
+  }
+
   render() {
-    console.log(this.state);
     const { editor, edit } = this.state;
+    const { todo, todoEditorVisible } = this.state;
     const { name } = this.props;
     const header = edit ?
       (
-        <Card.Editor innerRef={(editor) => {this.editor = editor}} type="text" value={editor} onChange={this.changeEditor}/>
+        <Card.Editor type="text" value={editor} onChange={this.changeEditor} onKeyDown={this.handleEditorKey}/>
       ) :
       (
         <Card.Header>
           <Card.Title>{name}</Card.Title>
           <Card.Actions>
-            <button onClick={this.props.onCreateTodo}>Add todo</button>
+            <button onClick={this.showTodoEditor}>Add todo</button>
             <button onClick={this.props.onDelete}>Delete card</button>
             <button onClick={this.edit}>Edit name</button>
           </Card.Actions>
@@ -88,6 +109,14 @@ export default class extends Component {
       <Card>
         {header}
         <Card.Body>
+          { todoEditorVisible === true && 
+            <Card.TodoEditor
+              type="text" 
+              placeholder="Create new todo"
+              value={todo} 
+              onChange={this.changeTodo}
+              onKeyDown={this.handleTodoEditorKey}/>
+          }
           {this.props.children}
         </Card.Body>
       </Card>

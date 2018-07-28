@@ -1,5 +1,29 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
+
+const Todo = styled.li`
+  border: 1px solid red;
+  border-radius: 3px;
+
+  &:not(:last-of-type) {
+    margin-bottom: .5rem;
+  }
+`
+
+Todo.Editor = styled.input`
+  width: 100%;
+  font-size: 1em;
+  padding: .5rem;
+`
+
+Todo.Actions = styled.div`
+
+`
+
+Todo.Preview = styled.div`
+  padding: .5rem;
+`
 
 export default class extends Component {
   state = {
@@ -49,20 +73,22 @@ export default class extends Component {
     const { edit, editor } = this.state;
     const element = edit ? 
       (
-        <input ref={(editor) => {this.editor = editor}} type="text" placeholder="todo content" value={editor} onChange={this.changeEditor}/>
+        <Todo.Editor ref={(editor) => {this.editor = editor}} type="text" placeholder="todo content" value={editor} onChange={this.changeEditor}/>
       ) :
       (
-        <div>
+        <Todo.Preview>
           <p>{content}</p>
-          <button onClick={this.props.onDelete}>Delete todo</button>
-          <button onClick={this.edit}>Edit todo</button>
-        </div>
+          <Todo.Actions>
+            <button onClick={this.props.onDelete}>Delete todo</button>
+            <button onClick={this.edit}>Edit todo</button>
+          </Todo.Actions>
+        </Todo.Preview>
       )
 
     return (
-      <div>
+      <Todo>
         {element}
-      </div>
+      </Todo>
     )
   }
 }

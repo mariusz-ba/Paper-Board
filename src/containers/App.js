@@ -8,32 +8,32 @@ import { createTodo, updateTodo, deleteTodo, deleteTodos } from 'actions/todosAc
 import Card from '../models/Card';
 import Todo from '../models/Todo';
 
+import CardsList from 'components/CardsList';
+import TodosList from 'components/TodosList';
 import CardComponent from 'components/Card';
 import TodoComponent from 'components/Todo';
 
+
 class App extends Component {
   state = {
-    cardName: '',
-    todoName: ''
+    cardName: ''
   }
 
   changeCardName = e => { this.setState({ cardName: e.target.value }) };
-  changeTodoName = e => { this.setState({ todoName: e.target.value }) };
 
   createCard = e => {
     this.props.createCard(new Card(this.state.cardName));
     this.setState({ cardName: '' });
   }
 
-  createTodo = cardId => {
-    const todo = new Todo(this.state.todoName);
+  createTodo = (cardId, content) => {
+    const todo = new Todo(content);
     this.props.createTodo(todo);
     this.props.addTodo(cardId, todo.id);
     this.setState({ todoName: '' });
   }
 
   deleteCard = id => {
-    // Delete todos associated with this card
     this.props.deleteTodos(this.props.cards.items[id].todos);
     this.props.deleteCard(id);
   }
@@ -54,7 +54,7 @@ class App extends Component {
   }
 
   render() {
-    const { cardName, todoName } = this.state;
+    const { cardName } = this.state;
     const { cards, todos } = this.props;
 
     return (
@@ -63,39 +63,35 @@ class App extends Component {
           <h1>Cards</h1>
           <input type="text" placeholder="card name" value={cardName} onChange={this.changeCardName}/>
           <button onClick={this.createCard}>Create card</button>
-          <ul>
-            {
-              Object.values(cards.items).map(card => (
-                <li key={card.id}>
-                  <CardComponent 
-                    name={card.name}
-                    onDelete={() => this.deleteCard(card.id)}
-                    onUpdate={(name) => this.updateCard(card, name)}
-                    onCreateTodo={() => console.log('create temporary todo')}
-                  >
-                    <input type="text" placeholder="todo name" value={todoName} onChange={this.changeTodoName}/>
-                    <button onClick={() => this.createTodo(card.id)}>Create todo</button>
-                    <ul>
-                      {
-                        card.todos.map(id => {
-                          const todo = todos.items[id];
-                          return (
-                            <li key={todo.id}>
-                              <TodoComponent
-                                content={todo.content}
-                                onDelete={() => this.deleteTodo(card.id, todo.id)}
-                                onUpdate={(content) => this.updateTodo(todo, content)}
-                              />
-                            </li>
-                          )
-                        })
-                      }
-                    </ul>
-                  </CardComponent>
-                </li>
-              ))
-            }
-          </ul>
+          <CardsList>
+          {
+            Object.values(cards.items).map(card => (
+              <CardComponent
+                key={card.id}
+                name={card.name}
+                onDelete={() => this.deleteCard(card.id)}
+                onUpdate={(name) => this.updateCard(card, name)}
+                onCreateTodo={(content) => this.createTodo(card.id, content)}
+              >
+                <TodosList>
+                {
+                  card.todos.map(id => {
+                    const todo = todos.items[id];
+                    return (
+                      <TodoComponent
+                        key={todo.id}
+                        content={todo.content}
+                        onDelete={() => this.deleteTodo(card.id, todo.id)}
+                        onUpdate={(content) => this.updateTodo(todo, content)}
+                      />
+                    )
+                  })
+                }
+                </TodosList>
+              </CardComponent>
+            ))
+          }
+          </CardsList>
         </div>
       </div>
     )
