@@ -59,6 +59,11 @@ class App extends Component {
     cardName: ''
   }
 
+  handleHeaderInputKey = e => {
+    if(e.key === 'Enter')
+      this.createCard();
+  }
+
   changeCardName = e => { this.setState({ cardName: e.target.value }) };
 
   createCard = e => {
@@ -103,7 +108,12 @@ class App extends Component {
           <Header.Title>
             Welcome to Paper-Board. Create Your own todos and group them together inside cards. Oh and everything is stored in your browsers localstorage so You don't have to be worried about losing something :)
           </Header.Title>
-          <Header.Input type="text" placeholder="Create new card" value={cardName} onChange={this.changeCardName}/>
+          <Header.Input
+            type="text" 
+            placeholder="Create new card" 
+            value={cardName} 
+            onChange={this.changeCardName}
+            onKeyDown={this.handleHeaderInputKey}/>
           <Header.Submit onClick={this.createCard}><i className="fas fa-plus"></i></Header.Submit>
         </Header>
         <section>

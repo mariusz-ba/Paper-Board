@@ -82,6 +82,14 @@ export default class extends Component {
     onCreateTodo: PropTypes.func.isRequired,
   }
 
+  componentDidUpdate() {
+    if(this.state.todoEditorVisible && this.todoEditor)
+      this.todoEditor.focus();
+
+    if(this.state.editor && this.cardEditor)
+      this.cardEditor.focus();
+  }
+
   handleEditorKey = e => {
     if(e.key === 'Enter')
       this.submit();
@@ -118,7 +126,12 @@ export default class extends Component {
     const { name } = this.props;
     const header = edit ?
       (
-        <Card.Editor type="text" value={editor} onChange={this.changeEditor} onKeyDown={this.handleEditorKey}/>
+        <Card.Editor
+          innerRef={(node) => {this.cardEditor = node}} 
+          type="text" 
+          value={editor} 
+          onChange={this.changeEditor} 
+          onKeyDown={this.handleEditorKey}/>
       ) :
       (
         <Card.Header>
@@ -137,6 +150,7 @@ export default class extends Component {
         <Card.Body>
           { todoEditorVisible === true && 
             <Card.TodoEditor
+              innerRef={(node) => {this.todoEditor = node}}
               rows="3"
               type="text" 
               placeholder="Create new todo"

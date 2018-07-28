@@ -83,6 +83,11 @@ export default class extends Component {
   componentWillUnmount() {
     document.removeEventListener('keydown', this.handleKey);
   }
+  
+  componentDidUpdate() {
+    if(this.state.edit && this.todoEditor)
+      this.todoEditor.focus();
+  }
 
   handleKey = e => {
     if(e.key === 'Enter')
@@ -107,7 +112,13 @@ export default class extends Component {
     const { edit, editor } = this.state;
     const element = edit ? 
       (
-        <Todo.Editor rows="3" type="text" placeholder="todo content" value={editor} onChange={this.changeEditor}/>
+        <Todo.Editor
+          innerRef={(node) => {this.todoEditor = node}}
+          rows="3" 
+          type="text" 
+          placeholder="Type something..." 
+          value={editor} 
+          onChange={this.changeEditor}/>
       ) :
       (
         <Todo.Preview>
