@@ -11,7 +11,7 @@ const Card = styled.li`
 
 Card.Header = styled.div`
   padding: .5rem;
-  border-bottom: 1px solid rgb(44,36,34);
+  border-bottom: 1px solid rgb(132,108,102);
   display: flex;
   justify-content: space-between;
 `

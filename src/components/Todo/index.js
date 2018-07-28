@@ -24,7 +24,10 @@ Todo.Editor = styled.textarea`
 `
 
 Todo.Actions = styled.div`
-  float: right;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-left: .5rem;
 
   button {
     border: 0;
@@ -38,12 +41,14 @@ Todo.Actions = styled.div`
     }
 
     &:not(:last-of-type) {
-      margin-right: .5rem;
+      margin-bottom: .5rem;
     }
   }
 `
 
 Todo.Preview = styled.div`
+  display: flex;
+  justify-content: space-between;
   padding: .5rem;
 
   p {
@@ -106,11 +111,11 @@ export default class extends Component {
       ) :
       (
         <Todo.Preview>
+          <p>{content}</p>
           <Todo.Actions>
             <button onClick={this.props.onDelete}><i className="fas fa-trash-alt"></i></button>
             <button onClick={this.edit}><i className="far fa-edit"></i></button>
           </Todo.Actions>
-          <p>{content}</p>
         </Todo.Preview>
       )
 
