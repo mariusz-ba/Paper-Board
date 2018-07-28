@@ -4,14 +4,14 @@ import styled from 'styled-components';
 
 const Card = styled.li`
   border-radius: 3px;
-  box-shadow: 0 0 5px rgba(44,36,34);
-  background: rgba(205,168,138);
+  box-shadow: 0 0 5px rgb(44,36,34);
+  background: rgb(205,168,138);
   color: #1a1a1a;
 `
 
 Card.Header = styled.div`
   padding: .5rem;
-  border-bottom: 1px solid rgba(44,36,34);
+  border-bottom: 1px solid rgb(44,36,34);
   display: flex;
   justify-content: space-between;
 `
@@ -31,7 +31,7 @@ Card.Actions = styled.div`
   align-self: flex-start;
 
   button {
-    text-shadow: 0 0 3px rgba(44,36,34);
+    text-shadow: 0 0 3px rgb(44,36,34);
     border: 0;
     outline: 0;
     color: #fff;
@@ -60,7 +60,7 @@ Card.TodoEditor = styled.textarea`
   max-width: 100%;
   font-size: 1em;
   padding: .5rem;
-  background: rgba(226,221,216);
+  background: 226,221,216);
 `
 
 export default class extends Component {

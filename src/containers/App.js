@@ -34,11 +34,11 @@ Header.Input = styled.input`
   font-size: 1.5em;
   padding: 1rem;
   padding-right: 2em;
-  background: rgba(205,168,138);
+  background: rgb(205,168,138);
   font-weight: bold;
 
   &::placeholder {
-    color: rgba(193,147,110);
+    color: rgb(193,147,110);
   }
 `
 

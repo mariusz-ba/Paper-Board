@@ -4,8 +4,8 @@ import styled from 'styled-components';
 
 const Todo = styled.li`
   border-radius: 3px;
-  background: rgba(226,221,216);
-  box-shadow: 0 0 3px rgba(205,168,138);
+  background: rgb(226,221,216);
+  box-shadow: 0 0 3px rgb(205,168,138);
 
   &:not(:last-of-type) {
     margin-bottom: .5rem;
@@ -20,7 +20,7 @@ Todo.Editor = styled.textarea`
   max-width: 100%;
   font-size: 1em;
   padding: .5rem;
-  background: rgba(226,221,216);
+  background: rgb(226,221,216);
 `
 
 Todo.Actions = styled.div`
