@@ -1,9 +1,11 @@
 const path = require('path');
+const webpack = require('webpack');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
   entry: path.join(__dirname, '/src/index.js'),
   output: {
-    filename: 'bundle.js',
+    filename: 'bundle.min.js',
     path: path.join(__dirname, '/dist'),
     publicPath: '/'
   },
@@ -27,6 +29,12 @@ module.exports = {
       utils: path.resolve('src/utils')
     },
     extensions: ['.js']
+  },
+  optimization: {
+    minimize: true,
+    minimizer: [new UglifyJsPlugin({
+      include: /\.min\.js$/
+    })]
   },
   mode: 'development'
 }
