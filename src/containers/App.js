@@ -8,6 +8,9 @@ import { createTodo, updateTodo, deleteTodo, deleteTodos } from 'actions/todosAc
 import Card from '../models/Card';
 import Todo from '../models/Todo';
 
+import CardComponent from 'components/Card';
+import TodoComponent from 'components/Todo';
+
 class App extends Component {
   state = {
     cardName: '',
@@ -40,6 +43,16 @@ class App extends Component {
     this.props.deleteTodo(todoId);
   }
 
+  updateCard = (card, name) => {
+    card.name = name;
+    this.props.updateCard(card);
+  }
+
+  updateTodo = (todo, content) => {
+    todo.content = content;
+    this.props.updateTodo(todo);
+  }
+
   render() {
     const { cardName, todoName } = this.state;
     const { cards, todos } = this.props;
@@ -54,25 +67,31 @@ class App extends Component {
             {
               Object.values(cards.items).map(card => (
                 <li key={card.id}>
-                  <h2>
-                    {card.name}
-                    <button onClick={() => this.deleteCard(card.id)}>Delete</button>
-                  </h2>
-                  <input type="text" placeholder="todo name" value={todoName} onChange={this.changeTodoName}/>
-                  <button onClick={() => this.createTodo(card.id)}>Create todo</button>
-                  <ul>
-                    {
-                      card.todos.map(id => {
-                        const todo = todos.items[id];
-                        return (
-                          <li key={todo.id}>
-                            {todo.content}
-                            <button onClick={() => this.deleteTodo(card.id, todo.id)}>Delete</button>
-                          </li>
-                        )
-                      })
-                    }
-                  </ul>
+                  <CardComponent 
+                    name={card.name}
+                    onDelete={() => this.deleteCard(card.id)}
+                    onUpdate={(name) => this.updateCard(card, name)}
+                    onCreateTodo={() => console.log('create temporary todo')}
+                  >
+                    <input type="text" placeholder="todo name" value={todoName} onChange={this.changeTodoName}/>
+                    <button onClick={() => this.createTodo(card.id)}>Create todo</button>
+                    <ul>
+                      {
+                        card.todos.map(id => {
+                          const todo = todos.items[id];
+                          return (
+                            <li key={todo.id}>
+                              <TodoComponent
+                                content={todo.content}
+                                onDelete={() => this.deleteTodo(card.id, todo.id)}
+                                onUpdate={(content) => this.updateTodo(todo, content)}
+                              />
+                            </li>
+                          )
+                        })
+                      }
+                    </ul>
+                  </CardComponent>
                 </li>
               ))
             }
