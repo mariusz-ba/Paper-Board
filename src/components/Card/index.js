@@ -81,13 +81,45 @@ export default class extends Component {
     // Function invoked when new todo is about to be created
     onCreateTodo: PropTypes.func.isRequired,
   }
+  
+  handleClickOutsideEditor = e => {
+    if(this.cardEditor && !this.cardEditor.contains(e.target))
+      this.setState({
+        edit: false,
+        editor: this.props.name
+      })
+  }
 
-  componentDidUpdate() {
+  handleClickOutsideTodoEditor = e => {
+    if(this.todoEditor && !this.todoEditor.contains(e.target))
+      this.setState({
+        todoEditorVisible: false,
+        todo: ''
+      })
+  }
+
+  componentDidUpdate(prevProps, prevState) {
     if(this.state.todoEditorVisible && this.todoEditor)
       this.todoEditor.focus();
 
     if(this.state.editor && this.cardEditor)
       this.cardEditor.focus();
+
+    if(prevState.edit !== this.state.edit) {
+      if(this.state.edit) {
+        document.addEventListener('click', this.handleClickOutsideEditor);
+      } else {
+        document.removeEventListener('click', this.handleClickOutsideEditor);
+      }
+    }
+
+    if(prevState.todoEditorVisible !== this.state.todoEditorVisible) {
+      if(this.state.todoEditorVisible) {
+        document.addEventListener('click', this.handleClickOutsideTodoEditor);
+      } else {
+        document.removeEventListener('click', this.handleClickOutsideTodoEditor);
+      }
+    }
   }
 
   handleEditorKey = e => {
