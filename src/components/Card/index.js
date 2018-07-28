@@ -3,13 +3,15 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const Card = styled.li`
-  border: 2px solid black;
   border-radius: 3px;
+  box-shadow: 0 0 5px rgba(44,36,34);
+  background: rgba(205,168,138);
+  color: #1a1a1a;
 `
 
 Card.Header = styled.div`
   padding: .5rem;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid rgba(44,36,34);
   display: flex;
   justify-content: space-between;
 `
@@ -20,13 +22,30 @@ Card.Editor = styled.input`
   padding: .5rem;
 `
 
-Card.Title = styled.h3`
+Card.Title = styled.h4`
 
 `
 
 Card.Actions = styled.div`
   display: flex;
   align-self: flex-start;
+
+  button {
+    text-shadow: 0 0 3px rgba(44,36,34);
+    border: 0;
+    outline: 0;
+    color: #fff;
+    background: transparent;
+    font-size: 1em;
+
+    &:hover {
+      cursor: pointer;  
+    }
+
+    &:not(:last-of-type) {
+      margin-right: .5rem;
+    }
+  }
 `
 
 Card.Body = styled.div`
@@ -98,9 +117,9 @@ export default class extends Component {
         <Card.Header>
           <Card.Title>{name}</Card.Title>
           <Card.Actions>
-            <button onClick={this.showTodoEditor}>Add todo</button>
-            <button onClick={this.props.onDelete}>Delete card</button>
-            <button onClick={this.edit}>Edit name</button>
+            <button onClick={this.showTodoEditor}><i className="fas fa-plus"></i></button>
+            <button onClick={this.props.onDelete}><i className="fas fa-minus"></i></button>
+            <button onClick={this.edit}><i className="fas fa-ellipsis-h"></i></button>
           </Card.Actions>
         </Card.Header>
       )

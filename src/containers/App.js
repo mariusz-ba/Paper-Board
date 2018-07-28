@@ -13,6 +13,43 @@ import TodosList from 'components/TodosList';
 import CardComponent from 'components/Card';
 import TodoComponent from 'components/Todo';
 
+import styled from 'styled-components';
+
+const Header = styled.header`
+  margin: 2rem 0;
+  text-align: center;
+`
+
+Header.Title = styled.h4`
+  margin: 0 auto;
+  margin-bottom: 2rem;
+  line-height: 1.5em;
+  max-width: 32em;
+`
+
+Header.Input = styled.input`
+  border: 0;
+  outline: 0;
+  border-radius: 3px;
+  font-size: 1.5em;
+  padding: 1rem;
+  padding-right: 2em;
+  background: rgba(205,168,138);
+  font-weight: bold;
+
+  &::placeholder {
+    color: rgba(193,147,110);
+  }
+`
+
+Header.Submit = styled.button`
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font-size: 1.5em;
+  color: #fff;
+  margin-left: -1.5em;
+`
 
 class App extends Component {
   state = {
@@ -59,10 +96,14 @@ class App extends Component {
 
     return (
       <div>
-        <div>
-          <h1>Cards</h1>
-          <input type="text" placeholder="card name" value={cardName} onChange={this.changeCardName}/>
-          <button onClick={this.createCard}>Create card</button>
+        <Header>
+          <Header.Title>
+            Welcome to Paper-Board. Create Your own todos and group them together inside cards. Oh and everything is stored in your browsers localstorage so You don't have to be worried about losing something :)
+          </Header.Title>
+          <Header.Input type="text" placeholder="Create new card" value={cardName} onChange={this.changeCardName}/>
+          <Header.Submit onClick={this.createCard}><i className="fas fa-plus"></i></Header.Submit>
+        </Header>
+        <section>
           <CardsList>
           {
             Object.values(cards.items).map(card => (
@@ -92,7 +133,7 @@ class App extends Component {
             ))
           }
           </CardsList>
-        </div>
+        </section>
       </div>
     )
   }

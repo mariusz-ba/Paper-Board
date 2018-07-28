@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const Todo = styled.li`
-  border: 1px solid red;
   border-radius: 3px;
+  background: rgba(226,221,216);
+  box-shadow: 0 0 3px rgba(205,168,138);
 
   &:not(:last-of-type) {
     margin-bottom: .5rem;
@@ -12,17 +13,42 @@ const Todo = styled.li`
 `
 
 Todo.Editor = styled.input`
+  border: 0;
+  border-radius: 3px;
+  outline: 0;
   width: 100%;
   font-size: 1em;
   padding: .5rem;
+  background: rgba(226,221,216);
 `
 
 Todo.Actions = styled.div`
+  float: right;
 
+  button {
+    border: 0;
+    outline: 0;
+    color: #000;
+    background: transparent;
+    font-size: 1em;
+
+    &:hover {
+      cursor: pointer;  
+    }
+
+    &:not(:last-of-type) {
+      margin-right: .5rem;
+    }
+  }
 `
 
 Todo.Preview = styled.div`
   padding: .5rem;
+
+  p {
+    font-size: 0.875em;
+    line-height: 1.2;
+  }
 `
 
 export default class extends Component {
@@ -77,11 +103,11 @@ export default class extends Component {
       ) :
       (
         <Todo.Preview>
-          <p>{content}</p>
           <Todo.Actions>
-            <button onClick={this.props.onDelete}>Delete todo</button>
-            <button onClick={this.edit}>Edit todo</button>
+            <button onClick={this.props.onDelete}><i className="fas fa-trash-alt"></i></button>
+            <button onClick={this.edit}><i className="far fa-edit"></i></button>
           </Todo.Actions>
+          <p>{content}</p>
         </Todo.Preview>
       )
 
