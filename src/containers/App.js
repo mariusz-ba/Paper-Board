@@ -16,26 +16,28 @@ import TodoComponent from 'components/Todo';
 import styled from 'styled-components';
 
 const Header = styled.header`
+  padding: 0 1rem;
   margin: 2rem 0;
   text-align: center;
 `
 
-Header.Title = styled.h4`
+Header.Title = styled.h3`
+  max-width: 32em;
   margin: 0 auto;
   margin-bottom: 2rem;
   line-height: 1.5em;
-  max-width: 32em;
 `
 
 Header.Input = styled.input`
   border: 0;
   outline: 0;
   border-radius: 3px;
-  font-size: 1.5em;
+  font-size: 1.5rem;
   padding: 1rem;
-  padding-right: 2em;
+  padding-right: 2rem;
   background: rgb(205,168,138);
   font-weight: bold;
+  max-width: 100%;
 
   &::placeholder {
     color: rgb(193,147,110);
@@ -46,9 +48,10 @@ Header.Submit = styled.button`
   border: 0;
   outline: 0;
   background: transparent;
-  font-size: 1.5em;
+  font-size: 1.5rem;
   color: #fff;
-  margin-left: -1.5em;
+  margin-left: -2rem;
+  margin-right: .5rem;
 `
 
 class App extends Component {
