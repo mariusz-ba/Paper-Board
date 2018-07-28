@@ -24,32 +24,44 @@ Todo.Editor = styled.textarea`
 `
 
 Todo.Actions = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  margin-left: .5rem;
+  opacity: 0;
 
+  position: absolute;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 3px;
+  background: rgb(226,221,216);
+
+  transition: opacity linear .2s;
+  
   button {
     border: 0;
     outline: 0;
     color: #000;
     background: transparent;
     font-size: 1em;
-
+    
     &:hover {
       cursor: pointer;  
     }
-
-    &:not(:last-of-type) {
-      margin-bottom: .5rem;
-    }
   }
-`
-
-Todo.Preview = styled.div`
+  `
+  
+  Todo.Preview = styled.div`
+  position: relative;
   display: flex;
   justify-content: space-between;
   padding: .5rem;
+  overflow: hidden;
+
+  &:hover div {
+    opacity: 1;
+  }
 
   p {
     font-size: 0.875em;
@@ -84,9 +96,25 @@ export default class extends Component {
     document.removeEventListener('keydown', this.handleKey);
   }
   
-  componentDidUpdate() {
+  componentDidUpdate(prevProps, prevState) {
     if(this.state.edit && this.todoEditor)
       this.todoEditor.focus();
+
+    if(prevState.edit !== this.state.edit) {
+      if(this.state.edit) {
+        document.addEventListener('click', this.handleClickOutside);
+      } else {
+        document.removeEventListener('click', this.handleClickOutside);
+      }
+    }
+  }
+
+  handleClickOutside = e => {
+    if(this.todoEditor && !this.todoEditor.contains(e.target))
+      this.setState({
+        edit: false,
+        editor: this.props.content
+      })
   }
 
   handleKey = e => {
