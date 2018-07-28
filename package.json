@@ -2,9 +2,9 @@
   "name": "paperboard",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "start": "webpack-dev-server -d --config webpack.config.dev.js --content-base dist/ --inline --hot"
+    "build": "webpack --config webpack.config.dev.js"
   },
   "author": "Mariusz Baran",
   "license": "MIT",
@@ -19,6 +19,7 @@
     "webpack-dev-server": "^3.1.5"
   },
   "dependencies": {
+    "express": "^4.16.3",
     "lodash": "^4.17.10",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
