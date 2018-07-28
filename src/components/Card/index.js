@@ -48,12 +48,19 @@ Card.Actions = styled.div`
   }
 `
 
-Card.Body = styled.div`
-
+Card.Body = styled.div` 
+  padding: .5rem;
 `
 
-Card.TodoEditor = styled.input`
-
+Card.TodoEditor = styled.textarea`
+  border: 0;
+  border-radius: 3px;
+  outline: 0;
+  width: 100%;
+  max-width: 100%;
+  font-size: 1em;
+  padding: .5rem;
+  background: rgba(226,221,216);
 `
 
 export default class extends Component {
@@ -130,6 +137,7 @@ export default class extends Component {
         <Card.Body>
           { todoEditorVisible === true && 
             <Card.TodoEditor
+              rows="3"
               type="text" 
               placeholder="Create new todo"
               value={todo} 

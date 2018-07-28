@@ -12,11 +12,12 @@ const Todo = styled.li`
   }
 `
 
-Todo.Editor = styled.input`
+Todo.Editor = styled.textarea`
   border: 0;
   border-radius: 3px;
   outline: 0;
   width: 100%;
+  max-width: 100%;
   font-size: 1em;
   padding: .5rem;
   background: rgba(226,221,216);
@@ -83,7 +84,9 @@ export default class extends Component {
       this.submit();
   }
 
-  edit = () => { this.setState({ edit: true }) };
+  edit = () => { 
+    this.setState({ edit: true });
+  };
 
   changeEditor = e => {
     this.setState({ editor: e.target.value });
@@ -99,7 +102,7 @@ export default class extends Component {
     const { edit, editor } = this.state;
     const element = edit ? 
       (
-        <Todo.Editor ref={(editor) => {this.editor = editor}} type="text" placeholder="todo content" value={editor} onChange={this.changeEditor}/>
+        <Todo.Editor rows="3" type="text" placeholder="todo content" value={editor} onChange={this.changeEditor}/>
       ) :
       (
         <Todo.Preview>
